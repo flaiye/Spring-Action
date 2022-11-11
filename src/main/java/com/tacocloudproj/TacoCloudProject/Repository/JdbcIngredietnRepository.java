@@ -2,6 +2,7 @@ package com.tacocloudproj.TacoCloudProject.Repository;
 
 import com.tacocloudproj.TacoCloudProject.model.Ingredient;
 import com.tacocloudproj.TacoCloudProject.model.Type;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -15,6 +16,7 @@ public class JdbcIngredietnRepository implements IngredientRepository {
 
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
     public JdbcIngredietnRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
@@ -22,7 +24,7 @@ public class JdbcIngredietnRepository implements IngredientRepository {
     @Override
     public Iterable<Ingredient> findAll() {
         return jdbcTemplate.query(
-                "select id, name, type from ingredient",
+                "select id, name, type from Ingredient",
                 this::mapRowToIngredient);
     }
 
@@ -40,7 +42,12 @@ public class JdbcIngredietnRepository implements IngredientRepository {
 
     @Override
     public Ingredient save(Ingredient ingredient) {
-        return null;
+        jdbcTemplate.update(
+                "insert into Ingredient (id, name, type) values (?, ?, ?)",
+                ingredient.getId(),
+                ingredient.getName(),
+                ingredient.getType().toString());
+        return ingredient;
     }
 
     private Ingredient mapRowToIngredient(ResultSet row, int rowNum) throws SQLException {
