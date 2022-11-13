@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,8 +33,6 @@ public class DesignTacoController {
     @ModelAttribute
     public void addIngredientsToModel(Model model) {
 
-//        Iterable<Ingredient> ingredients = ingredientRepo.findAll();
-
         List<Ingredient> ingredients = new ArrayList<>();
         ingredientRepo.findAll().forEach(x -> ingredients.add(x));
 
@@ -43,19 +40,6 @@ public class DesignTacoController {
         for (Type type : types) {
             model.addAttribute(type.toString().toLowerCase(), filterByType(ingredients, type));
         }
-
-//        List<Ingredient> ingredients = Arrays.asList(
-//                new Ingredient("FLTO", "Flour Tortilla", Type.WRAP),
-//                new Ingredient("COTO", "Corn Tortilla", Type.WRAP),
-//                new Ingredient("GRBF", "Ground Beef", Type.PROTEIN),
-//                new Ingredient("CARN", "Corn Tortilla", Type.PROTEIN),
-//                new Ingredient("TMTO", "Diced Tomato", Type.VEGGIES),
-//                new Ingredient("LETC", "Lettuce", Type.VEGGIES),
-//                new Ingredient("CHED", "Cheddar", Type.CHEESE),
-//                new Ingredient("JACK", "Monterey Jack", Type.CHEESE),
-//                new Ingredient("SLSA", "Salsa", Type.SAUCE),
-//                new Ingredient("SRCR", "Sour Cream", Type.WRAP)
-//        );
 
     }
 
